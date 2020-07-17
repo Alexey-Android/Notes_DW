@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Параметр descendantFocusability позволяет обрабатывать onClickItem()
+    для всего этого элемента списка. И все контролы не чувствительные к прикосновениям считаются
+    областью для нажатия. Кнопки будут работать, а иконки как часть области всего элемента -->
+
+
+    <!-- tools - нужны для проектирования верстки, обычно заполяются примерами
+    как это будет выглядеть, но при выполнении приложения не будут учитываться-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- layout_weight - веса, чем меньше вес, тем выше приоритет отрисовки.
+        Сейчас есть более удобные контейнеры, например ConstraintLayout,
+        но базовае Layout-ы проще в понимания и нужнее в обучении :) -->
+
+        <TextView
+            android:id="@+id/title_note"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            tools:text="Title" />
+
+        <!-- ellipsize - место в котором можно будет поставить "...",
+        если заголовок окажется супердлинным. Может быть в начале, в середине и в конце
+        Например: "Однажды я решил стать разаб..."-->
+
+        <TextView
+            android:id="@+id/note"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            tools:text="Note" />
+
+        <TextView
+            android:id="@+id/dead_line"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            tools:text="Deadline" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

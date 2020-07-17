@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="start"
     android:orientation="vertical"
     android:padding="0dp"
@@ -13,20 +13,20 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimaryDark"
+        android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/settings"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/settings" />
 
     <TextView
         android:id="@+id/tv_enter_new__pin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-  android:textSize="40sp"
+        android:gravity="center"
         android:text="Новый пин-код:"
-        android:gravity="center"/>
+        android:textSize="40sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:hint="Новый пин-код"
-android:inputType="numberPassword"
+            android:inputType="numberPassword"
             android:padding="0dp"
             android:textSize="20sp" />
 

@@ -33,7 +33,7 @@ public class NewNoteActivity extends AppCompatActivity {
             case android.R.id.home:
                 // todo: goto back activity from here
 
-                Intent intent = new Intent(getApplicationContext(), EnterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 //finish();

@@ -1,14 +1,21 @@
 package com.example.notes;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,8 +35,10 @@ public class ListNotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_notes);
         FloatingActionButton fab = findViewById(R.id.fab);
         ListView listView = findViewById(R.id.listView);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
-       // fillImages();
+        // fillImages();
 
         // При тапе по кнопке добавим один новый элемент списка
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +91,26 @@ public class ListNotesActivity extends AppCompatActivity {
         ItemData itemData = adapter.getItem(position);
         Toast.makeText(ListNotesActivity.this,
                 "Title: " + itemData.getTitle() + "\n" +
-                        "Note: " + itemData.getNote() + "\n"+
+                        "Note: " + itemData.getNote() + "\n" +
                         "Deadline: " + itemData.getDeadLine() + "\n",
                 Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.enter_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.settings) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+        //return super.onOptionsItemSelected(item);
+        return true;
+    }
+
 }

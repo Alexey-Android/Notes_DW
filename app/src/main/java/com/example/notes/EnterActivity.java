@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
@@ -13,10 +14,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class EnterActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public final static String passwordFileName = "password";
+
     private Button button_del, button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
-    private TextView tv2, tv4, tv6, tv8;
+    private TextView tv2, tv4, tv6, tv8, tvWrongPin;
     String code = "";
     StringBuffer sb = new StringBuffer();
 
@@ -47,6 +55,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
         tv4 = findViewById(R.id.tv_4);
         tv6 = findViewById(R.id.tv_6);
         tv8 = findViewById(R.id.tv_8);
+        tvWrongPin = findViewById(R.id.tv_wrong_pin);
 
         button0.setOnClickListener(this);
         button1.setOnClickListener(this);
@@ -164,7 +173,54 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                 tv4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 tv6.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 tv8.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+                String savedPassword = readFromFile(passwordFileName);
+                String newPassword = sb.toString();
+                if (newPassword.equals(savedPassword)) {
+                    Toast.makeText(EnterActivity.this, "Пароль правильный", Toast.LENGTH_SHORT).show();
+                    tvWrongPin.setText("");
+
+                    tv2.setBackgroundColor(Color.GRAY);
+                    tv4.setBackgroundColor(Color.GRAY);
+                    tv6.setBackgroundColor(Color.GRAY);
+                    tv8.setBackgroundColor(Color.GRAY);
+
+                    sb.delete(0, 4);
+
+                    Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
+                    startActivity(intent);
+                } else {
+                    tvWrongPin.setText("ПИН введен неверно, попробуйте еще раз " + savedPassword + newPassword);
+                    tvWrongPin.setTextColor(Color.RED);
+
+                    tv2.setBackgroundColor(Color.GRAY);
+                    tv4.setBackgroundColor(Color.GRAY);
+                    tv6.setBackgroundColor(Color.GRAY);
+                    tv8.setBackgroundColor(Color.GRAY);
+
+                    sb.delete(0, 4);
+                }
                 break;
         }
+    }
+
+    private String readFromFile(String fileName) {
+        // Получим входные байты из файла которых нужно прочесть.
+        // Декодируем байты в символы
+        // Читаем данные из потока ввода, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
+        StringBuilder sb2 = new StringBuilder();
+        try (FileInputStream fis = openFileInput(fileName);
+             InputStreamReader isr = new InputStreamReader(fis);
+             BufferedReader br = new BufferedReader(isr);
+        ) {
+            String s;
+            while ((s = br.readLine()) != null) {
+                sb2.append(s);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return sb2.toString();
     }
 }

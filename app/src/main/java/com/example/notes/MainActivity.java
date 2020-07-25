@@ -15,9 +15,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorGrey));
                     boolean isPasswordWritten = writeToFile(password, passwordFileName);
                     if (isPasswordWritten) {
-                        Toast.makeText(MainActivity.this, "Новый пин успешно записан", Toast.LENGTH_SHORT).show();
+                        String savedPassword = readFromFile(passwordFileName);
+                        Toast.makeText(MainActivity.this, "Новый пин успешно записан " + savedPassword, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
+                        startActivity(intent);
                     }
                 }
             }
@@ -96,6 +102,26 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private String readFromFile(String fileName) {
+        // Получим входные байты из файла которых нужно прочесть.
+        // Декодируем байты в символы
+        // Читаем данные из потока ввода, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
+        StringBuilder sb2 = new StringBuilder();
+        try (FileInputStream fis = openFileInput(fileName);
+             InputStreamReader isr = new InputStreamReader(fis);
+             BufferedReader br = new BufferedReader(isr);
+        ) {
+            String s;
+            while ((s = br.readLine()) != null) {
+                sb2.append(s);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return sb2.toString();
     }
 
     @Override

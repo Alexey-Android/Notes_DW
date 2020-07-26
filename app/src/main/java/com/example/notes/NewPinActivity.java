@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class MainActivity extends AppCompatActivity {
+public class NewPinActivity extends AppCompatActivity {
 
     public final static String passwordFileName = "password";
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_pin);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         init();
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         final TextView fourSymbols = findViewById(R.id.tv_four_symbol);
         final ImageButton iBtnEye = findViewById(R.id.ib_eye);
         final boolean[] flag = {true};
-
         final EditText newPin = findViewById(R.id.et_new_pin);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -54,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
                 final String password = newPin.getText().toString();
                 if (password.length() != 4) {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorRed));
-                    Toast.makeText(MainActivity.this, "Введите новый пин из 4-х цифр", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewPinActivity.this, "Введите новый пин из 4-х цифр", Toast.LENGTH_SHORT).show();
                 } else {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorGrey));
                     boolean isPasswordWritten = writeToFile(password, passwordFileName);
                     if (isPasswordWritten) {
                         String savedPassword = readFromFile(passwordFileName);
-                        Toast.makeText(MainActivity.this, "Новый пин успешно записан " + savedPassword, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NewPinActivity.this, "Новый пин успешно записан " + savedPassword, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                         startActivity(intent);
                     }
@@ -129,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // todo: goto back activity from here
-
-                Intent intent = new Intent(getApplicationContext(), EnterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 //finish();

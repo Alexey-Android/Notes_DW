@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:orientation="vertical"
-    android:padding="0dp"
-    tools:context=".MainActivity">
+    tools:context=".NewNoteActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -25,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill"
+        android:layout_marginHorizontal="10dp"
         android:layout_weight="1"
         android:hint="Заголовок заметки"
         android:inputType="text"
@@ -35,6 +35,7 @@
         android:id="@+id/et_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
         android:layout_weight="7"
         android:hint="Тело заметки"
         android:inputType="textMultiLine"

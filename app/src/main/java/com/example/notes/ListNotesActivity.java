@@ -35,7 +35,7 @@ public class ListNotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_notes);
         FloatingActionButton fab = findViewById(R.id.fab);
         ListView listView = findViewById(R.id.listView);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         // fillImages();
@@ -44,7 +44,10 @@ public class ListNotesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                generateRandomItemData();
+
+                Intent intent = new Intent(getApplicationContext(), NewNoteActivity.class);
+                startActivity(intent);
+                //generateRandomItemData();
             }
         });
 
@@ -106,7 +109,7 @@ public class ListNotesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.settings) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NewPinActivity.class);
             startActivity(intent);
         }
         //return super.onOptionsItemSelected(item);

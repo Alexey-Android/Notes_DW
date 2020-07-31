@@ -84,6 +84,7 @@ public class NewPinActivity extends AppCompatActivity {
                 flag[0] = !flag[0];
             }
         });
+
     }
 
     private boolean writeToFile(String str, String fileName) {

@@ -8,7 +8,7 @@
     android:layout_gravity="start"
     android:orientation="vertical"
     android:padding="0dp"
-    tools:context=".EnterActivity">
+    tools:context=".screens.EnterActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"

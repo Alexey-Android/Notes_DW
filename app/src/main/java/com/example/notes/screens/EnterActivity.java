@@ -1,4 +1,4 @@
-package com.example.notes;
+package com.example.notes.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.notes.ListNotesActivity;
+import com.example.notes.NewPinActivity;
+import com.example.notes.R;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

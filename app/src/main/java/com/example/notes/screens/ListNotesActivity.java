@@ -35,7 +35,7 @@ public class ListNotesActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         final Adapter adapter = new Adapter();
         recyclerView.setAdapter(adapter);

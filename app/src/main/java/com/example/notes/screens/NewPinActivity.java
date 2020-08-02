@@ -1,4 +1,4 @@
-package com.example.notes;
+package com.example.notes.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.notes.R;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -84,7 +86,6 @@ public class NewPinActivity extends AppCompatActivity {
                 flag[0] = !flag[0];
             }
         });
-
     }
 
     private boolean writeToFile(String str, String fileName) {
@@ -128,11 +129,10 @@ public class NewPinActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // todo: goto back activity from here
                 Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                //finish();
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

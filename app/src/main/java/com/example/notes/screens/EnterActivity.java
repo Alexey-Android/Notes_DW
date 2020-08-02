@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.notes.ListNotesActivity;
-import com.example.notes.NewPinActivity;
 import com.example.notes.R;
 
 import java.io.BufferedReader;

@@ -1,21 +1,16 @@
-package com.example.notes;
+package com.example.notes.screens;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -24,11 +19,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.notes.App;
+import com.example.notes.R;
+import com.example.notes.model.Note;
+
 import java.util.Calendar;
 
 public class NewNoteActivity extends AppCompatActivity {
 
-    EditText noteTitle, note, dateTime;
+    private static final String EXTRA_NOTE = "NewNoteActivity.EXTRA_NOTE";
+
+    private Note note;
+
+    public static void start(Activity caller, Note note) {
+        Intent intent = new Intent(caller, NewNoteActivity.class);
+        if (note != null) {
+            intent.putExtra(EXTRA_NOTE, note);
+        }
+        caller.startActivity(intent);
+    }
+
+    EditText noteTitle, noteText, dateTime;
     CheckBox checkBox;
     ImageButton calendar, time;
     TextView currentDateTime;
@@ -48,15 +59,24 @@ public class NewNoteActivity extends AppCompatActivity {
     private void init() {
 
         noteTitle = findViewById(R.id.et_noteTitle);
-        note = findViewById(R.id.et_note);
+        noteText = findViewById(R.id.et_note);
         checkBox = findViewById(R.id.cb_deadline);
         calendar = findViewById(R.id.ib_calendar);
         time = findViewById(R.id.ib_time);
         dateTime = findViewById(R.id.et_date_time);
 
-        dateTime.setEnabled(false);
-        calendar.setEnabled(false);
-        time.setEnabled(false);
+        if (getIntent().hasExtra(EXTRA_NOTE)) {
+            note = getIntent().getParcelableExtra(EXTRA_NOTE);
+            noteTitle.setText(note.noteTitle);
+            noteText.setText(note.noteText);
+            checkBox.setChecked(note.hasDeadline);
+            dateTime.setText(note.dateTime);
+        } else {
+            note = new Note();
+            dateTime.setEnabled(false);
+            calendar.setEnabled(false);
+            time.setEnabled(false);
+        }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -90,13 +110,27 @@ public class NewNoteActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // todo: goto back activity from here
-                String nNoteTitle = noteTitle.getText().toString();
-                String nNote = note.getText().toString();
+                //String nNoteTitle = noteTitle.getText().toString();
+                //String nNote = noteText.getText().toString();
+
+                if (noteTitle.getText().length() > 0 | noteText.getText().length() > 0 | dateTime.getText().length() > 0) {
+                    note.noteTitle = noteTitle.getText().toString();
+                    note.noteText = noteText.getText().toString();
+                    note.dateTime = dateTime.getText().toString();
+                    note.hasDeadline = false;
+                    note.timestamp = System.currentTimeMillis();
+                    if (getIntent().hasExtra(EXTRA_NOTE)) {
+                        App.getInstance().getNoteDao().update(note);
+                    } else {
+                        App.getInstance().getNoteDao().insert(note);
+                    }
+                   // finish();
+                }
 
                 Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                //finish();
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

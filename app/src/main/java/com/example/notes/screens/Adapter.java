@@ -1,17 +1,23 @@
 package com.example.notes.screens;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.database.DataSetObserver;
+import android.graphics.LightingColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
+import com.example.notes.App;
 import com.example.notes.R;
 import com.example.notes.model.Note;
 
@@ -22,6 +28,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
     private SortedList<Note> sortedList;
 
     public Adapter() {
+
 
         sortedList = new SortedList<>(Note.class, new SortedList.Callback<Note>() {
             @Override
@@ -138,6 +145,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
         TextView noteText, noteTitle, deadLine;
         Note note;
 
+        final int DIALOG = 1;
+
         public NoteViewHolder(@NonNull final View itemView) {
             super(itemView);
 
@@ -153,12 +162,39 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                 }
             });
 
-            /*delete.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                private static final int CUSTOM_COLOR = 2;
+
                 @Override
-                public void onClick(View view) {
-                    App.getInstance().getNoteDao().delete(note);
+                public boolean onLongClick(View view) {
+
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(itemView.getContext(), DIALOG);
+                    dialog.setCancelable(false);
+                    dialog.setIcon(R.drawable.ic_baseline_delete_24);
+                    dialog.setTitle(R.string.attention);
+                    dialog.setMessage(R.string.sure);
+                    dialog.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            App.getInstance().getNoteDao().delete(note);
+                        }
+                    })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+
+                    final AlertDialog alert = dialog.create();
+                    //alert.getWindow().setNavigationBarColor();
+                   // alert.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0xFF444444, CUSTOM_COLOR));
+                   // alert.setInverseBackgroundForced(true);
+                    alert.show();
+
+                    return false;
                 }
-            });*/
+            });
 
            /* completed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

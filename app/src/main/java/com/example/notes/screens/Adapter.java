@@ -145,7 +145,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
         TextView noteText, noteTitle, deadLine;
         Note note;
 
-        final int DIALOG = 1;
+        final int DIALOG_DELETE = 1;
 
         public NoteViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -168,7 +168,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                 @Override
                 public boolean onLongClick(View view) {
 
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(itemView.getContext(), DIALOG);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(itemView.getContext(), DIALOG_DELETE);
                     dialog.setCancelable(false);
                     dialog.setIcon(R.drawable.ic_baseline_delete_24);
                     dialog.setTitle(R.string.attention);
@@ -188,8 +188,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
 
                     final AlertDialog alert = dialog.create();
                     //alert.getWindow().setNavigationBarColor();
-                   // alert.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0xFF444444, CUSTOM_COLOR));
-                   // alert.setInverseBackgroundForced(true);
+                    // alert.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0xFF444444, CUSTOM_COLOR));
+                    // alert.setInverseBackgroundForced(true);
                     alert.show();
 
                     return false;
@@ -212,8 +212,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
         public void bind(Note note) {
             this.note = note;
             noteTitle.setText(note.noteTitle);
+            if (note.noteTitle.equals("")) {
+                noteTitle.setVisibility(View.GONE);
+            }
             noteText.setText(note.noteText);
+            if (note.noteText.equals("")) {
+                noteText.setVisibility(View.GONE);
+            }
             deadLine.setText(note.dateTime);
+            if (note.dateTime.equals("")) {
+                deadLine.setVisibility(View.GONE);
+            }
         }
     }
 }

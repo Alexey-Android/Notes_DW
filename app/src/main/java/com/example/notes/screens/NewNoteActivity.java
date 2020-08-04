@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.notes.App;
 import com.example.notes.R;
@@ -125,6 +126,7 @@ public class NewNoteActivity extends AppCompatActivity {
                         App.getInstance().getNoteDao().insert(note);
                     }
                    // finish();
+                    Toast.makeText(this, "Заметка успешно сохранена", Toast.LENGTH_SHORT).show();
                 }
 
                 Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);

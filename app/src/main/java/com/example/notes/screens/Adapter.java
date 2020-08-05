@@ -34,10 +34,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
             @Override
             public int compare(Note o1, Note o2) {
                 if (!o2.hasDeadline && o1.hasDeadline) {
-                    return 1;
+                    return -1;
                 }
                 if (o2.hasDeadline && !o1.hasDeadline) {
-                    return -1;
+                    return 1;
                 }
                 return (int) (o2.timestamp - o1.timestamp);
             }

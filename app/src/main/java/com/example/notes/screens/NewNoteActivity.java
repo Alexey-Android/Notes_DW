@@ -72,11 +72,17 @@ public class NewNoteActivity extends AppCompatActivity {
             noteText.setText(note.noteText);
             checkBox.setChecked(note.hasDeadline);
             dateTime.setText(note.dateTime);
+            if(!checkBox.isChecked()) {
+                calendar.setVisibility(View.GONE);
+                time.setVisibility(View.GONE);
+            }
         } else {
             note = new Note();
             dateTime.setEnabled(false);
-            calendar.setEnabled(false);
-            time.setEnabled(false);
+            calendar.setVisibility(View.GONE);
+            time.setVisibility(View.GONE);
+            //calendar.setEnabled(false);
+            //time.setEnabled(false);
         }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -87,14 +93,18 @@ public class NewNoteActivity extends AppCompatActivity {
                     setInitialDateTime();
 
                     dateTime.setEnabled(true);
-                    calendar.setEnabled(true);
-                    time.setEnabled(true);
+                    //calendar.setEnabled(true);
+                    //time.setEnabled(true);
+                    calendar.setVisibility(View.VISIBLE);
+                    time.setVisibility(View.VISIBLE);
                 } else {
                     dateTime.setText("");
 
                     dateTime.setEnabled(false);
-                    calendar.setEnabled(false);
-                    time.setEnabled(false);
+                    //calendar.setEnabled(false);
+                    //time.setEnabled(false);
+                    calendar.setVisibility(View.GONE);
+                    time.setVisibility(View.GONE);
                 }
             }
         });
@@ -118,7 +128,14 @@ public class NewNoteActivity extends AppCompatActivity {
                     note.noteTitle = noteTitle.getText().toString();
                     note.noteText = noteText.getText().toString();
                     note.dateTime = dateTime.getText().toString();
-                    note.hasDeadline = false;
+                    if(checkBox.isChecked()) {
+                        note.hasDeadline = true;
+                    } else {
+                        note.hasDeadline = false;
+                    }
+
+                    //note.hasDeadline = checkBox.isChecked();
+                    //note.hasDeadline = false;
                     note.timestamp = System.currentTimeMillis();
                     if (getIntent().hasExtra(EXTRA_NOTE)) {
                         App.getInstance().getNoteDao().update(note);

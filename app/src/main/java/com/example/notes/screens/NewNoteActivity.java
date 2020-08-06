@@ -53,7 +53,6 @@ public class NewNoteActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-
         init();
     }
 
@@ -68,21 +67,20 @@ public class NewNoteActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra(EXTRA_NOTE)) {
             note = getIntent().getParcelableExtra(EXTRA_NOTE);
+            assert note != null;
             noteTitle.setText(note.noteTitle);
             noteText.setText(note.noteText);
             checkBox.setChecked(note.hasDeadline);
             dateTime.setText(note.dateTime);
-            if(!checkBox.isChecked()) {
-                calendar.setVisibility(View.GONE);
-                time.setVisibility(View.GONE);
+            if (!checkBox.isChecked()) {
+                calendar.setEnabled(false);
+                time.setEnabled(false);
             }
         } else {
             note = new Note();
             dateTime.setEnabled(false);
-            calendar.setVisibility(View.GONE);
-            time.setVisibility(View.GONE);
-            //calendar.setEnabled(false);
-            //time.setEnabled(false);
+            calendar.setEnabled(false);
+            time.setEnabled(false);
         }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -93,18 +91,16 @@ public class NewNoteActivity extends AppCompatActivity {
                     setInitialDateTime();
 
                     dateTime.setEnabled(true);
-                    //calendar.setEnabled(true);
-                    //time.setEnabled(true);
-                    calendar.setVisibility(View.VISIBLE);
-                    time.setVisibility(View.VISIBLE);
+                    calendar.setEnabled(true);
+                    time.setEnabled(true);
+
                 } else {
                     dateTime.setText("");
 
                     dateTime.setEnabled(false);
-                    //calendar.setEnabled(false);
-                    //time.setEnabled(false);
-                    calendar.setVisibility(View.GONE);
-                    time.setVisibility(View.GONE);
+                    calendar.setEnabled(false);
+                    time.setEnabled(false);
+
                 }
             }
         });
@@ -121,28 +117,24 @@ public class NewNoteActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // todo: goto back activity from here
-                //String nNoteTitle = noteTitle.getText().toString();
-                //String nNote = noteText.getText().toString();
 
                 if (noteTitle.getText().length() > 0 | noteText.getText().length() > 0 | dateTime.getText().length() > 0) {
                     note.noteTitle = noteTitle.getText().toString();
                     note.noteText = noteText.getText().toString();
                     note.dateTime = dateTime.getText().toString();
-                    if(checkBox.isChecked()) {
+                    if (checkBox.isChecked()) {
                         note.hasDeadline = true;
                     } else {
                         note.hasDeadline = false;
                     }
 
-                    //note.hasDeadline = checkBox.isChecked();
-                    //note.hasDeadline = false;
                     note.timestamp = System.currentTimeMillis();
                     if (getIntent().hasExtra(EXTRA_NOTE)) {
                         App.getInstance().getNoteDao().update(note);
                     } else {
                         App.getInstance().getNoteDao().insert(note);
                     }
-                   // finish();
+                    // finish();
                     Toast.makeText(this, "Заметка успешно сохранена", Toast.LENGTH_SHORT).show();
                 }
 
@@ -188,6 +180,7 @@ public class NewNoteActivity extends AppCompatActivity {
             dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             dateAndTime.set(Calendar.MINUTE, minute);
             setInitialDateTime();
+            Toast.makeText(NewNoteActivity.this, "" + dateAndTime, Toast.LENGTH_LONG).show();
         }
     };
 

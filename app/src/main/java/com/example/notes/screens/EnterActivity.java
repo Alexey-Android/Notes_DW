@@ -84,58 +84,46 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn0:
                 sb.append(button0.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn1:
                 sb.append(button1.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn2:
                 sb.append(button2.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn3:
                 sb.append(button3.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn4:
                 sb.append(button4.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn5:
                 sb.append(button5.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn6:
                 sb.append(button6.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn7:
                 sb.append(button7.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn8:
                 sb.append(button8.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn9:
                 sb.append(button9.getText().toString());
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_del:
-                //sb.append(button_del.getText().toString());
                 sb.deleteCharAt((sb.length() - 1));
                 checkPin();
-                Toast.makeText(EnterActivity.this, "Длина " + sb.length() + "Значение " + sb, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

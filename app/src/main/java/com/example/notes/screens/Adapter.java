@@ -21,6 +21,8 @@ import com.example.notes.App;
 import com.example.notes.R;
 import com.example.notes.model.Note;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implements ListAdapter {
@@ -39,6 +41,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                 if (o2.hasDeadline && !o1.hasDeadline) {
                     return 1;
                 }
+                SimpleDateFormat format = new SimpleDateFormat();
+                try {
+                    if ((format.parse(o2.dateTime)).getTime() - format.parse(o1.dateTime).getTime() > 0) {
+                        return 1;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if ((format.parse(o2.dateTime)).getTime() - format.parse(o1.dateTime).getTime() < 0) {
+                        return - 1;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
                 return (int) (o2.timestamp - o1.timestamp);
             }
 

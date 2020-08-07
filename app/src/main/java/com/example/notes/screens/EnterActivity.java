@@ -5,6 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +29,8 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv2, tv4, tv6, tv8, tvWrongPin;
 
     StringBuffer sb = new StringBuffer();
+    private final ColorFilter yellowFilter = new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+    private final ColorFilter redFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     private void init() {
 
         String savedPassword = readFromFile(passwordFileName);
-        if (savedPassword.length() != 4) {
+        if (savedPassword == null || savedPassword.length() != 4) {
             Intent intent = new Intent(getApplicationContext(), NewPinActivity.class);
             startActivity(intent);
         }
@@ -74,7 +79,6 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
         button8.setOnClickListener(this);
         button9.setOnClickListener(this);
         button_del.setOnClickListener(this);
-
     }
 
     @Override
@@ -131,35 +135,34 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     private void checkPin() {
         switch (sb.length()) {
             case 0:
-                tv2.setBackgroundColor(Color.GRAY);
-                tv4.setBackgroundColor(Color.GRAY);
-                tv6.setBackgroundColor(Color.GRAY);
-                tv8.setBackgroundColor(Color.GRAY);
+                tv2.getBackground().clearColorFilter();
+                tv4.getBackground().clearColorFilter();
+                tv6.getBackground().clearColorFilter();
+                tv8.getBackground().clearColorFilter();
                 break;
             case 1:
-                tv2.setBackgroundColor(Color.YELLOW);
-                tv4.setBackgroundColor(Color.GRAY);
-                tv6.setBackgroundColor(Color.GRAY);
-                tv8.setBackgroundColor(Color.GRAY);
+                tv2.getBackground().setColorFilter(yellowFilter);
+                tv4.getBackground().clearColorFilter();
+                tv6.getBackground().clearColorFilter();
+                tv8.getBackground().clearColorFilter();
                 break;
             case 2:
-
-                tv2.setBackgroundColor(Color.YELLOW);
-                tv4.setBackgroundColor(Color.YELLOW);
-                tv6.setBackgroundColor(Color.GRAY);
-                tv8.setBackgroundColor(Color.GRAY);
+                tv2.getBackground().setColorFilter(yellowFilter);
+                tv4.getBackground().setColorFilter(yellowFilter);
+                tv6.getBackground().clearColorFilter();
+                tv8.getBackground().clearColorFilter();
                 break;
             case 3:
-                tv2.setBackgroundColor(Color.YELLOW);
-                tv4.setBackgroundColor(Color.YELLOW);
-                tv6.setBackgroundColor(Color.YELLOW);
-                tv8.setBackgroundColor(Color.GRAY);
+                tv2.getBackground().setColorFilter(yellowFilter);
+                tv4.getBackground().setColorFilter(yellowFilter);
+                tv6.getBackground().setColorFilter(yellowFilter);
+                tv8.getBackground().clearColorFilter();
                 break;
             case 4:
-                tv2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                tv4.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                tv6.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                tv8.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                tv2.getBackground().setColorFilter(yellowFilter);
+                tv4.getBackground().setColorFilter(yellowFilter);
+                tv6.getBackground().setColorFilter(yellowFilter);
+                tv8.getBackground().setColorFilter(yellowFilter);
 
                 String savedPassword = readFromFile(passwordFileName);
                 String newPassword = sb.toString();
@@ -167,27 +170,28 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(EnterActivity.this, "Пароль правильный", Toast.LENGTH_SHORT).show();
                     tvWrongPin.setText("");
 
-                    tv2.setBackgroundColor(Color.GRAY);
-                    tv4.setBackgroundColor(Color.GRAY);
-                    tv6.setBackgroundColor(Color.GRAY);
-                    tv8.setBackgroundColor(Color.GRAY);
+                    tv2.getBackground().clearColorFilter();
+                    tv4.getBackground().clearColorFilter();
+                    tv6.getBackground().clearColorFilter();
+                    tv8.getBackground().clearColorFilter();
 
                     sb.delete(0, 4);
 
                     Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                     startActivity(intent);
                 } else {
-                    tvWrongPin.setText("ПИН введен неверно, попробуйте еще раз " + savedPassword + newPassword);
+                    tvWrongPin.setText("ПИН введен неверно, попробуйте еще раз " + savedPassword + " " + newPassword);
                     tvWrongPin.setTextColor(Color.RED);
 
-                    tv2.setBackgroundColor(Color.GRAY);
-                    tv4.setBackgroundColor(Color.GRAY);
-                    tv6.setBackgroundColor(Color.GRAY);
-                    tv8.setBackgroundColor(Color.GRAY);
+                    tv2.getBackground().setColorFilter(redFilter);
+                    tv4.getBackground().setColorFilter(redFilter);
+                    tv6.getBackground().setColorFilter(redFilter);
+                    tv8.getBackground().setColorFilter(redFilter);
 
                     sb.delete(0, 4);
+                    break;
                 }
-                break;
+               // break;
         }
     }
 

@@ -6,12 +6,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.graphics.LightingColorFilter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,10 +24,12 @@ import com.example.notes.model.Note;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implements ListAdapter {
 
     private SortedList<Note> sortedList;
+    private SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy, hh:mm a", Locale.US);
 
     public Adapter() {
 
@@ -41,17 +43,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                 if (o2.hasDeadline && !o1.hasDeadline) {
                     return 1;
                 }
-                SimpleDateFormat format = new SimpleDateFormat();
+
                 try {
                     if ((format.parse(o2.dateTime)).getTime() - format.parse(o1.dateTime).getTime() > 0) {
-                        return 1;
+                        return -1;
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 try {
                     if ((format.parse(o2.dateTime)).getTime() - format.parse(o1.dateTime).getTime() < 0) {
-                        return - 1;
+                        return 1;
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -214,33 +216,27 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                     return false;
                 }
             });
-
-           /* completed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                    if (!silentUpdate) {
-                        note.hasDeadline = checked;
-                        App.getInstance().getNoteDao().update(note);
-                    }
-
-                }
-            });*/
-
         }
 
         public void bind(Note note) {
             this.note = note;
             noteTitle.setText(note.noteTitle);
-            if (note.noteTitle.equals("")) {
+            if (TextUtils.isEmpty(note.noteTitle)) {
                 noteTitle.setVisibility(View.GONE);
+            } else {
+                noteTitle.setVisibility(View.VISIBLE);
             }
             noteText.setText(note.noteText);
-            if (note.noteText.equals("")) {
+            if (TextUtils.isEmpty(note.noteText)) {
                 noteText.setVisibility(View.GONE);
+            } else {
+                noteText.setVisibility(View.VISIBLE);
             }
             deadLine.setText(note.dateTime);
-            if (note.dateTime.equals("")) {
+            if (TextUtils.isEmpty(note.dateTime)) {
                 deadLine.setVisibility(View.GONE);
+            } else {
+                deadLine.setVisibility(View.VISIBLE);
             }
         }
     }

@@ -170,7 +170,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         dateTime.setText(DateUtils.formatDateTime(this,
                 dateAndTime.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR
                         | DateUtils.FORMAT_SHOW_TIME));
     }
 

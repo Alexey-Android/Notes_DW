@@ -29,7 +29,7 @@ import java.util.Locale;
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implements ListAdapter {
 
     private SortedList<Note> sortedList;
-    private SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy, hh:mm a", Locale.US);
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy, MM, dd, hh:mm");
 
     public Adapter() {
 

@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 public class EnterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,6 +32,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     StringBuffer sb = new StringBuffer();
     private final ColorFilter yellowFilter = new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
     private final ColorFilter redFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+    private final ColorFilter greenFilter = new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,16 +161,20 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                 tv8.getBackground().clearColorFilter();
                 break;
             case 4:
-                tv2.getBackground().setColorFilter(yellowFilter);
-                tv4.getBackground().setColorFilter(yellowFilter);
-                tv6.getBackground().setColorFilter(yellowFilter);
-                tv8.getBackground().setColorFilter(yellowFilter);
 
                 String savedPassword = readFromFile(passwordFileName);
                 String newPassword = sb.toString();
                 if (newPassword.equals(savedPassword)) {
+
+                    tv2.getBackground().setColorFilter(greenFilter);
+                    tv4.getBackground().setColorFilter(greenFilter);
+                    tv6.getBackground().setColorFilter(greenFilter);
+                    tv8.getBackground().setColorFilter(greenFilter);
+
                     Toast.makeText(EnterActivity.this, "Пароль правильный", Toast.LENGTH_SHORT).show();
                     tvWrongPin.setText("");
+
+                    pause();
 
                     tv2.getBackground().clearColorFilter();
                     tv4.getBackground().clearColorFilter();
@@ -213,5 +219,13 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
             return null;
         }
         return sb2.toString();
+    }
+
+    void pause () {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

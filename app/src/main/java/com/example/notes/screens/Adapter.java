@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,16 +25,17 @@ import com.example.notes.model.Note;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implements ListAdapter {
 
     private SortedList<Note> sortedList;
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy, MM, dd, hh:mm");
+    private static SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy, hh:mm");
+    static Calendar currentDateAndTime = Calendar.getInstance();
 
     public Adapter() {
-
 
         sortedList = new SortedList<>(Note.class, new SortedList.Callback<Note>() {
             @Override
@@ -48,6 +51,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                     if ((format.parse(o2.dateTime)).getTime() - format.parse(o1.dateTime).getTime() > 0) {
                         return -1;
                     }
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -58,7 +62,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
 
                 return (int) (o2.timestamp - o1.timestamp);
             }
@@ -238,6 +241,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
             } else {
                 deadLine.setVisibility(View.VISIBLE);
             }
+            try {
+                if ((currentDateAndTime.getTimeInMillis() - (format.parse(note.dateTime)).getTime()) > 0) {
+                    deadLine.setTextColor(Color.RED);
+                } else if((currentDateAndTime.getTimeInMillis() - (format.parse(note.dateTime)).getTime()) < 86400000){
+                    deadLine.setTextColor(Color.GREEN);
+                } else  {
+                    deadLine.setTextColor(Color.BLACK);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
+
     }
 }

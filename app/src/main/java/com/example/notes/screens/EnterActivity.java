@@ -2,6 +2,7 @@ package com.example.notes.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,9 +31,13 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv2, tv4, tv6, tv8, tvWrongPin;
 
     StringBuffer sb = new StringBuffer();
-    private final ColorFilter yellowFilter = new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-    private final ColorFilter redFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-    private final ColorFilter greenFilter = new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+
+    private ColorFilter yellowFilter;
+    private ColorFilter redFilter;
+    private ColorFilter greenFilter;
+    //private final ColorFilter yellowFilter = new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+    //private final ColorFilter redFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+    //private final ColorFilter greenFilter = new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,10 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(myToolbar);
 
         init();
+
+        yellowFilter = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+        redFilter = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
+        greenFilter = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorGreen), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void init() {
@@ -174,8 +183,6 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(EnterActivity.this, "Пароль правильный", Toast.LENGTH_SHORT).show();
                     tvWrongPin.setText("");
 
-                    pause();
-
                     tv2.getBackground().clearColorFilter();
                     tv4.getBackground().clearColorFilter();
                     tv6.getBackground().clearColorFilter();
@@ -197,7 +204,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                     sb.delete(0, 4);
                     break;
                 }
-               // break;
+                // break;
         }
     }
 
@@ -219,13 +226,5 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
             return null;
         }
         return sb2.toString();
-    }
-
-    void pause () {
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

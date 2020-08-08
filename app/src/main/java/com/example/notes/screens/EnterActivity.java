@@ -10,6 +10,7 @@ import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,9 +36,17 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     private ColorFilter yellowFilter;
     private ColorFilter redFilter;
     private ColorFilter greenFilter;
-    //private final ColorFilter yellowFilter = new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-    //private final ColorFilter redFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-    //private final ColorFilter greenFilter = new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+
+    private Runnable onPasswordCorrect = new Runnable() {
+        @Override
+        public void run() {
+            Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    };
+
+    private Handler mainThreadHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     private void init() {
 
         String savedPassword = readFromFile(passwordFileName);
+
         if (savedPassword == null || savedPassword.length() != 4) {
             Intent intent = new Intent(getApplicationContext(), NewPinActivity.class);
             startActivity(intent);
@@ -72,13 +82,11 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
         button8 = findViewById(R.id.btn8);
         button9 = findViewById(R.id.btn9);
         button_del = findViewById(R.id.btn_del);
-
         tv2 = findViewById(R.id.tv_2);
         tv4 = findViewById(R.id.tv_4);
         tv6 = findViewById(R.id.tv_6);
         tv8 = findViewById(R.id.tv_8);
         tvWrongPin = findViewById(R.id.tv_wrong_pin);
-
         button0.setOnClickListener(this);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -94,7 +102,6 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.btn0:
                 sb.append(button0.getText().toString());
@@ -170,9 +177,9 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                 tv8.getBackground().clearColorFilter();
                 break;
             case 4:
-
                 String savedPassword = readFromFile(passwordFileName);
                 String newPassword = sb.toString();
+
                 if (newPassword.equals(savedPassword)) {
 
                     tv2.getBackground().setColorFilter(greenFilter);
@@ -181,31 +188,31 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                     tv8.getBackground().setColorFilter(greenFilter);
 
                     Toast.makeText(EnterActivity.this, "Пароль правильный", Toast.LENGTH_SHORT).show();
+
                     tvWrongPin.setText("");
 
-                    tv2.getBackground().clearColorFilter();
-                    tv4.getBackground().clearColorFilter();
-                    tv6.getBackground().clearColorFilter();
-                    tv8.getBackground().clearColorFilter();
+                    mainThreadHandler.postDelayed(onPasswordCorrect, 100);
 
-                    sb.delete(0, 4);
-
-                    Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
-                    startActivity(intent);
                 } else {
+
                     tvWrongPin.setText("ПИН введен неверно, попробуйте еще раз " + savedPassword + " " + newPassword);
                     tvWrongPin.setTextColor(Color.RED);
-
                     tv2.getBackground().setColorFilter(redFilter);
                     tv4.getBackground().setColorFilter(redFilter);
                     tv6.getBackground().setColorFilter(redFilter);
                     tv8.getBackground().setColorFilter(redFilter);
-
                     sb.delete(0, 4);
+
                     break;
                 }
                 // break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mainThreadHandler.removeCallbacks(onPasswordCorrect);
+        super.onDestroy();
     }
 
     private String readFromFile(String fileName) {

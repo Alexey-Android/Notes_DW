@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
@@ -244,9 +245,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
             try {
                 if ((currentDateAndTime.getTimeInMillis() - (format.parse(note.dateTime)).getTime()) > 0) {
                     deadLine.setTextColor(Color.RED);
-                } else if((currentDateAndTime.getTimeInMillis() - (format.parse(note.dateTime)).getTime()) < 86400000){
-                    deadLine.setTextColor(Color.GREEN);
-                } else  {
+                } else if ((format.parse(note.dateTime)).getTime() - (currentDateAndTime.getTimeInMillis()) < 86400000 &&
+                        (currentDateAndTime.getTimeInMillis() - (format.parse(note.dateTime)).getTime()) < 0) {
+                    deadLine.setTextColor(Color.MAGENTA);
+                } else {
                     deadLine.setTextColor(Color.BLACK);
                 }
             } catch (ParseException e) {

@@ -26,7 +26,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Enter PIN:"
+        android:text="Введите ПИН:"
         android:textSize="40sp" />
 
     <LinearLayout
@@ -166,6 +166,6 @@
         android:gravity="center"
         android:text=""
         android:textColor="@color/colorRed"
-        android:textSize="25sp" />
+        android:textSize="20sp" />
 
 </LinearLayout>

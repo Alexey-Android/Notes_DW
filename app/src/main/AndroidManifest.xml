@@ -31,5 +31,6 @@
             android:screenOrientation="portrait" />
 
     </application>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>

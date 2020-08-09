@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ import java.util.concurrent.TimeUnit;
 public class EnterActivity extends AppCompatActivity implements View.OnClickListener {
 
     public final static String passwordFileName = "password";
+
+    Vibrator vibrator;
 
     private Button button_del, button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
     private TextView tv2, tv4, tv6, tv8, tvWrongPin;
@@ -56,6 +59,8 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(myToolbar);
 
         init();
+        //long[] pattern = { 500, 300, 400, 200 };
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         yellowFilter = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
         redFilter = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
@@ -165,6 +170,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                 tv4.getBackground().clearColorFilter();
                 tv6.getBackground().clearColorFilter();
                 tv8.getBackground().clearColorFilter();
+                tvWrongPin.setText("");
                 break;
             case 2:
                 tv2.getBackground().setColorFilter(yellowFilter);
@@ -191,14 +197,15 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
 
                     Toast.makeText(EnterActivity.this, "Пароль правильный", Toast.LENGTH_SHORT).show();
 
-                    tvWrongPin.setText("");
+                    // tvWrongPin.setText("");
 
                     mainThreadHandler.postDelayed(onPasswordCorrect, 100);
 
                 } else {
 
-                    tvWrongPin.setText("ПИН введен неверно, попробуйте еще раз " + savedPassword + " " + newPassword);
+                    tvWrongPin.setText("ПИН введен неверно, попробуйте еще раз");
                     tvWrongPin.setTextColor(Color.RED);
+                    vibrator.vibrate(700);
                     tv2.getBackground().setColorFilter(redFilter);
                     tv4.getBackground().setColorFilter(redFilter);
                     tv6.getBackground().setColorFilter(redFilter);

@@ -3,6 +3,7 @@ package com.example.notes.screens;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.graphics.Color;
@@ -249,13 +250,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                 deadLine.setVisibility(View.VISIBLE);
             }
             try {
+                Context context = deadLine.getContext();
                 if ((currentDateAndTime.getTimeInMillis() - (format.parse(note.dateTime)).getTime()) > 0) {
-                    deadLine.setTextColor(Color.RED);
+                    deadLine.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
                 } else if ((format.parse(note.dateTime)).getTime() - (currentDateAndTime.getTimeInMillis()) < 86400000 &&
                         (currentDateAndTime.getTimeInMillis() - (format.parse(note.dateTime)).getTime()) < 0) {
-                    deadLine.setTextColor(Color.MAGENTA);
+                    deadLine.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 } else {
-                    deadLine.setTextColor(Color.BLACK);
+                    deadLine.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

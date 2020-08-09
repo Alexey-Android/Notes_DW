@@ -180,7 +180,6 @@ public class NewNoteActivity extends AppCompatActivity {
             dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             dateAndTime.set(Calendar.MINUTE, minute);
             setInitialDateTime();
-            Toast.makeText(NewNoteActivity.this, "" + dateAndTime, Toast.LENGTH_LONG).show();
         }
     };
 

@@ -144,9 +144,11 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                 checkPin();
                 break;
             case R.id.btn_del:
-                sb.deleteCharAt((sb.length() - 1));
-                checkPin();
-                break;
+                if (sb.length() != 0) {
+                    sb.deleteCharAt((sb.length() - 1));
+                    checkPin();
+                    break;
+                }
         }
     }
 

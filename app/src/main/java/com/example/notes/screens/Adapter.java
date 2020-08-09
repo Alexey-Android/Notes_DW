@@ -6,7 +6,10 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +38,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
     private SortedList<Note> sortedList;
     private static SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy, hh:mm");
     static Calendar currentDateAndTime = Calendar.getInstance();
+
 
     public Adapter() {
 
@@ -223,6 +227,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
         }
 
         public void bind(Note note) {
+
+
             this.note = note;
             noteTitle.setText(note.noteTitle);
             if (TextUtils.isEmpty(note.noteTitle)) {
@@ -254,8 +260,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 }

@@ -7,8 +7,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -54,6 +56,12 @@ public class NewNoteActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         init();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.new_note_menu, menu);
+        return true;
     }
 
     private void init() {
@@ -106,11 +114,6 @@ public class NewNoteActivity extends AppCompatActivity {
         });
 
     }
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.enter_menu, menu);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -143,8 +146,16 @@ public class NewNoteActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
                 return true;
+
+            case R.id.mail:
+                sendMail();
+                Toast.makeText(this, "Отправить письмо", Toast.LENGTH_SHORT).show();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
+
+
         }
     }
 
@@ -167,7 +178,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
     // установка начальных даты и времени
     private void setInitialDateTime() {
-
         dateTime.setText(DateUtils.formatDateTime(this,
                 dateAndTime.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR
@@ -193,5 +203,16 @@ public class NewNoteActivity extends AppCompatActivity {
         }
     };
 
-
+    private void sendMail() {
+        final String mailNoteTitle = noteTitle.getText().toString();
+        final String mailNoteText = noteText.getText().toString();
+        Uri uri = Uri.fromParts("sms", mailNoteText, null);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri).putExtra("sms_body", mailNoteTitle);
+        if (intent.resolveActivity(getPackageManager()) == null) {
+            // TODO Текст убрать в strings.xml
+            Toast.makeText(this, "У вас нет приложения для отправки MAIL", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        startActivity(intent);
+    }
 }

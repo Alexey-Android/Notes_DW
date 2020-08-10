@@ -60,7 +60,7 @@ public class ListNotesActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.enter_menu, menu);
+        getMenuInflater().inflate(R.menu.list_notes_menu, menu);
         return true;
     }
 

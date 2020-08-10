@@ -3,12 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_baseline_lock_24"
-        app:showAsAction="always"
-        android:title="pin" />
-
-    <item
         android:id="@+id/mail"
         android:icon="@drawable/ic_baseline_mail_24"
         app:showAsAction="always"

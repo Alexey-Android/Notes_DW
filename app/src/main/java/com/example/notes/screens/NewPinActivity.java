@@ -134,6 +134,7 @@ public class NewPinActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

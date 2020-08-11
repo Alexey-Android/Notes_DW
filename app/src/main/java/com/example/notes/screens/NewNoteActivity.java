@@ -206,13 +206,28 @@ public class NewNoteActivity extends AppCompatActivity {
     private void sendMail() {
         final String mailNoteTitle = noteTitle.getText().toString();
         final String mailNoteText = noteText.getText().toString();
-        Uri uri = Uri.fromParts("sms", mailNoteText, null);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri).putExtra("sms_body", mailNoteTitle);
+        final String mailDateTime = dateTime.getText().toString();
+
+        StringBuilder sb = new StringBuilder();
+        if (!mailNoteTitle.equals("")) {
+            sb.append("Тема: " + mailNoteTitle + "\n");
+        }
+        if (!mailNoteText.equals("")) {
+            sb.append("Содержание: " + mailNoteText + "\n");
+        }
+        if (!mailDateTime.equals("")) {
+            sb.append("Срок истекает: " + mailDateTime);
+        }
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
         if (intent.resolveActivity(getPackageManager()) == null) {
-            // TODO Текст убрать в strings.xml
-            Toast.makeText(this, "У вас нет приложения для отправки MAIL", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "У вас нет приложения для отправки", Toast.LENGTH_SHORT).show();
             return;
         }
-        startActivity(intent);
+        Intent chosenIntent = Intent.createChooser(intent, "Выберите приложение для отправки");
+        startActivity(chosenIntent);
+
     }
 }

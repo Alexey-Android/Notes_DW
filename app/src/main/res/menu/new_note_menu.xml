@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/mail"
-        android:icon="@drawable/ic_baseline_mail_24"
+        android:icon="@drawable/ic_baseline_share_24"
         app:showAsAction="always"
         android:title="mail" />
 </menu>

@@ -23,13 +23,12 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
 
 public class EnterActivity extends AppCompatActivity implements View.OnClickListener {
 
     public final static String passwordFileName = "password";
 
-    Vibrator vibrator;
+    private Vibrator vibrator;
 
     private Button button_del, button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
     private TextView tv2, tv4, tv6, tv8, tvWrongPin;
@@ -59,7 +58,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(myToolbar);
 
         init();
-        //long[] pattern = { 500, 300, 400, 200 };
+
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         yellowFilter = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
@@ -195,15 +194,13 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                     tv6.getBackground().setColorFilter(greenFilter);
                     tv8.getBackground().setColorFilter(greenFilter);
 
-                    Toast.makeText(EnterActivity.this, "Пароль правильный", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnterActivity.this, getString(R.string.pin_correct), Toast.LENGTH_SHORT).show();
 
-                    // tvWrongPin.setText("");
-
-                    mainThreadHandler.postDelayed(onPasswordCorrect, 100);
+                    mainThreadHandler.postDelayed(onPasswordCorrect, 150);
 
                 } else {
 
-                    tvWrongPin.setText("ПИН введен неверно, попробуйте еще раз");
+                    tvWrongPin.setText(getString(R.string.pin_not_correct));
                     tvWrongPin.setTextColor(Color.RED);
                     vibrator.vibrate(700);
                     tv2.getBackground().setColorFilter(redFilter);
@@ -214,7 +211,6 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
 
                     break;
                 }
-                // break;
         }
     }
 

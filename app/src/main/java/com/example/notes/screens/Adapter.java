@@ -2,22 +2,15 @@ package com.example.notes.screens;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -32,14 +25,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implements ListAdapter {
 
     private SortedList<Note> sortedList;
     private static SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy, hh:mm");
     static Calendar currentDateAndTime = Calendar.getInstance();
-
 
     public Adapter() {
 
@@ -172,10 +163,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
 
-        TextView noteText, noteTitle, deadLine;
-        Note note;
+        private TextView noteText, noteTitle, deadLine;
+        private Note note;
 
-        final int DIALOG_DELETE = 1;
+        private final int DIALOG_DELETE = 1;
 
         public NoteViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -183,7 +174,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
             noteTitle = itemView.findViewById(R.id.title_note);
             noteText = itemView.findViewById(R.id.note);
             deadLine = itemView.findViewById(R.id.dead_line);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -193,7 +183,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
             });
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                private static final int CUSTOM_COLOR = 2;
 
                 @Override
                 public boolean onLongClick(View view) {
@@ -212,23 +201,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> implem
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                 }
                             });
 
                     final AlertDialog alert = dialog.create();
-                    //alert.getWindow().setNavigationBarColor();
-                    // alert.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0xFF444444, CUSTOM_COLOR));
-                    // alert.setInverseBackgroundForced(true);
                     alert.show();
-
                     return false;
                 }
             });
         }
 
         public void bind(Note note) {
-
 
             this.note = note;
             noteTitle.setText(note.noteTitle);

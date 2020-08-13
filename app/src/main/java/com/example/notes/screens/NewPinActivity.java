@@ -55,13 +55,13 @@ public class NewPinActivity extends AppCompatActivity {
                 final String password = newPin.getText().toString();
                 if (password.length() != 4) {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorRed));
-                    Toast.makeText(NewPinActivity.this, "Введите новый пин из 4-х цифр", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewPinActivity.this, getString(R.string.pin_four), Toast.LENGTH_SHORT).show();
                 } else {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorGrey));
                     boolean isPasswordWritten = writeToFile(password, passwordFileName);
                     if (isPasswordWritten) {
                         String savedPassword = readFromFile(passwordFileName);
-                        Toast.makeText(NewPinActivity.this, "Новый пин успешно записан " + savedPassword, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NewPinActivity.this, getString(R.string.new_pin_saved), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                         startActivity(intent);
                     }

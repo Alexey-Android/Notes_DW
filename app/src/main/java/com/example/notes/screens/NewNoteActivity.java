@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -42,11 +43,10 @@ public class NewNoteActivity extends AppCompatActivity {
         caller.startActivity(intent);
     }
 
-    EditText noteTitle, noteText, dateTime;
-    CheckBox checkBox;
-    ImageButton calendar, time;
-    TextView currentDateTime;
-    Calendar dateAndTime = Calendar.getInstance();
+    private EditText noteTitle, noteText, dateTime;
+    private CheckBox checkBox;
+    private ImageButton calendar, time;
+    private Calendar dateAndTime = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +83,16 @@ public class NewNoteActivity extends AppCompatActivity {
             if (!checkBox.isChecked()) {
                 calendar.setEnabled(false);
                 time.setEnabled(false);
+                calendar.setColorFilter(R.color.colorLightGrey);
+                time.setColorFilter(R.color.colorLightGrey);
             }
         } else {
             note = new Note();
             dateTime.setEnabled(false);
             calendar.setEnabled(false);
             time.setEnabled(false);
+            calendar.setColorFilter(R.color.colorLightGrey);
+            time.setColorFilter(R.color.colorLightGrey);
         }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -97,17 +101,19 @@ public class NewNoteActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (checkBox.isChecked()) {
                     setInitialDateTime();
-
                     dateTime.setEnabled(true);
                     calendar.setEnabled(true);
                     time.setEnabled(true);
+                    calendar.clearColorFilter();
+                    time.clearColorFilter();
 
                 } else {
                     dateTime.setText("");
-
                     dateTime.setEnabled(false);
                     calendar.setEnabled(false);
                     time.setEnabled(false);
+                    calendar.setColorFilter(R.color.colorLightGrey);
+                    time.setColorFilter(R.color.colorLightGrey);
 
                 }
             }
@@ -119,8 +125,6 @@ public class NewNoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // todo: goto back activity from here
-
                 if (noteTitle.getText().length() > 0 | noteText.getText().length() > 0 | dateTime.getText().length() > 0) {
                     note.noteTitle = noteTitle.getText().toString();
                     note.noteText = noteText.getText().toString();
@@ -137,8 +141,8 @@ public class NewNoteActivity extends AppCompatActivity {
                     } else {
                         App.getInstance().getNoteDao().insert(note);
                     }
-                    // finish();
-                    Toast.makeText(this, "Заметка успешно сохранена", Toast.LENGTH_SHORT).show();
+                    finish();
+                    Toast.makeText(this, getString(R.string.note_saved), Toast.LENGTH_SHORT).show();
                 }
 
                 Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
@@ -148,14 +152,10 @@ public class NewNoteActivity extends AppCompatActivity {
                 return true;
 
             case R.id.mail:
-                sendMail();
-                Toast.makeText(this, "Отправить письмо", Toast.LENGTH_SHORT).show();
+                sendNote();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
-
-
         }
     }
 
@@ -203,30 +203,30 @@ public class NewNoteActivity extends AppCompatActivity {
         }
     };
 
-    private void sendMail() {
+    private void sendNote() {
         final String mailNoteTitle = noteTitle.getText().toString();
         final String mailNoteText = noteText.getText().toString();
         final String mailDateTime = dateTime.getText().toString();
 
         StringBuilder sb = new StringBuilder();
         if (!mailNoteTitle.equals("")) {
-            sb.append("Тема: " + mailNoteTitle + "\n");
+            sb.append(getString(R.string.topic) + mailNoteTitle + "\n");
         }
         if (!mailNoteText.equals("")) {
-            sb.append("Содержание: " + mailNoteText + "\n");
+            sb.append(getString(R.string.content) + mailNoteText + "\n");
         }
         if (!mailDateTime.equals("")) {
-            sb.append("Срок истекает: " + mailDateTime);
+            sb.append(getString(R.string.deadline) + mailDateTime);
         }
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
         if (intent.resolveActivity(getPackageManager()) == null) {
-            Toast.makeText(this, "У вас нет приложения для отправки", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_app), Toast.LENGTH_SHORT).show();
             return;
         }
-        Intent chosenIntent = Intent.createChooser(intent, "Выберите приложение для отправки");
+        Intent chosenIntent = Intent.createChooser(intent, getString(R.string.choose_app));
         startActivity(chosenIntent);
 
     }

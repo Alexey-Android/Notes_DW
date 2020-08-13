@@ -16,5 +16,26 @@
     <string name="choose_app">Выберите приложение для отправки</string>
     <string name="pin_four">Введите новый пин из 4-х цифр</string>
     <string name="new_pin_saved">Новый пин успешно сохранен</string>
+    <string name="enter_pin">Введите ПИН:</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="_0">0</string>
+    <string name="del">DEL</string>
+    <string name="title_note">Заголовок заметки</string>
+    <string name="content_note">Тело заметки</string>
+    <string name="no_deadline">Дедлайн не установлен</string>
+    <string name="new_pin">Новый пин-код:</string>
+    <string name="new_pin_code">Новый пин-код</string>
+    <string name="four_symbols">Пин-код должен состоять из 4-х цифр</string>
+    <string name="save">Сохранить</string>
+    <string name="_pin">pin</string>
+    <string name="_share">mail</string>
 
 </resources>

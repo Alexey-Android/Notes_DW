@@ -32,6 +32,14 @@ public class App extends Application {
                 .build();
 
         noteDao = database.noteDao();
+
+        /* Конкретная реализация выбирается только здесь.
+           Изменением одной строчки здесь,
+           мы заменяем реализацию во всем приложении!
+        */
+
+       /* noteRepository = new FileNoteRepository(this);
+        passwordStorage = new SimpleKeystore(this);*/
     }
 
     public AppDatabase getDatabase() {
@@ -49,4 +57,13 @@ public class App extends Application {
     public void setNoteDao(NoteDao noteDao) {
         this.noteDao = noteDao;
     }
+
+    // Возвращаем интерфейс, а не конкретную реализацию!
+/*    public static NoteRepository getNoteRepository() {
+        return noteRepository;
+    }*/
+    // Возвращаем интерфейс, а не конкретную реализацию!
+   /* public static Keystore getKeystore() {
+        return keystore;
+    }*/
 }

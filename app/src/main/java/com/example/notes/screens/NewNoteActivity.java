@@ -151,7 +151,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 finish();
                 return true;
 
-            case R.id.mail:
+            case R.id.share:
                 sendNote();
                 return true;
             default:

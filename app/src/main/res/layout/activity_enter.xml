@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:orientation="vertical"
-    android:padding="0dp"
     tools:context=".screens.EnterActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -26,7 +25,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Введите ПИН:"
+        android:text="@string/enter_pin"
         android:textSize="40sp" />
 
     <LinearLayout
@@ -91,7 +90,7 @@
     </LinearLayout>
 
 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -100,60 +99,60 @@
 
         <Button
             android:id="@+id/btn1"
-            android:text="1"
+            android:text="@string/_1"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn2"
-            android:text="2"
+            android:text="@string/_2"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn3"
-            android:text="3"
+            android:text="@string/_3"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn4"
-            android:text="4"
+            android:text="@string/_4"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn5"
-            android:text="5"
+            android:text="@string/_5"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn6"
-            android:text="6"
+            android:text="@string/_6"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn7"
-            android:text="7"
+            android:text="@string/_7"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn8"
-            android:text="8"
+            android:text="@string/_8"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn9"
-            android:text="9"
+            android:text="@string/_9"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn0"
             android:layout_columnSpan="2"
             android:layout_gravity="fill"
-            android:text="0"
+            android:text="@string/_0"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn_del"
             android:layout_column="2"
-            android:text="DEL"
+            android:text="@string/del"
             android:textSize="20sp" />
 
     </GridLayout>

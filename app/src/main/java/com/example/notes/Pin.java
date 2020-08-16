@@ -1,5 +1,7 @@
 package com.example.notes;
 
+import android.content.Context;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -9,15 +11,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class Pin {
-    private static final Object MODE_PRIVATE = 1;
+    private Context context;
+    public Pin(Context context) {
+        this.context = context;
+    }
 
-    private boolean writeToFile(String str, String fileName) {
+    public boolean writeToFile(String str, String fileName) {
         // Создадим файл и откроем поток для записи данных
         // Обеспечим переход символьных потока данных к байтовым потокам.
         // Запишем текст в поток вывода данных, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
         // Осуществим запись данных
         // Закроем поток
-        try (FileOutputStream fos = openFileOutput(fileName, MODE_PRIVATE);
+        try (FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
              OutputStreamWriter osw = new OutputStreamWriter(fos);
              BufferedWriter bw = new BufferedWriter(osw)) {
             bw.write(str);
@@ -32,7 +37,7 @@ public class Pin {
         // Декодируем байты в символы
         // Читаем данные из потока ввода, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
         StringBuilder sb2 = new StringBuilder();
-        try (FileInputStream fis = openFileInput(fileName);
+        try (FileInputStream fis = context.openFileInput(fileName);
              InputStreamReader isr = new InputStreamReader(fis);
              BufferedReader br = new BufferedReader(isr);
         ) {

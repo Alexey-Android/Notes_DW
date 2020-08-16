@@ -3,6 +3,7 @@ package com.example.notes.screens;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notes.Pin;
 import com.example.notes.R;
 
 import java.io.BufferedReader;
@@ -58,9 +60,9 @@ public class NewPinActivity extends AppCompatActivity {
                     Toast.makeText(NewPinActivity.this, getString(R.string.pin_four), Toast.LENGTH_SHORT).show();
                 } else {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorGrey));
-                    boolean isPasswordWritten = writeToFile(password, passwordFileName);
+                    boolean isPasswordWritten = Pin.writeToFile(password, passwordFileName);
                     if (isPasswordWritten) {
-                        String savedPassword = readFromFile(passwordFileName);
+                        //String savedPassword = readFromFile(passwordFileName);
                         Toast.makeText(NewPinActivity.this, getString(R.string.new_pin_saved), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                         startActivity(intent);
@@ -88,7 +90,7 @@ public class NewPinActivity extends AppCompatActivity {
         });
     }
 
-    private boolean writeToFile(String str, String fileName) {
+  /*  private boolean writeToFile(String str, String fileName) {
         // Создадим файл и откроем поток для записи данных
         // Обеспечим переход символьных потока данных к байтовым потокам.
         // Запишем текст в поток вывода данных, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
@@ -103,9 +105,9 @@ public class NewPinActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
-    }
+    }*/
 
-    private String readFromFile(String fileName) {
+  /*  private String readFromFile(String fileName) {
         // Получим входные байты из файла которых нужно прочесть.
         // Декодируем байты в символы
         // Читаем данные из потока ввода, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
@@ -123,7 +125,7 @@ public class NewPinActivity extends AppCompatActivity {
             return null;
         }
         return sb2.toString();
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

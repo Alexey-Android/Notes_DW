@@ -22,8 +22,6 @@ import com.example.notes.R;
 
 public class EnterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public final static String passwordFileName = "password";
-
     private Vibrator vibrator;
 
     private Button button_del, button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
@@ -64,8 +62,7 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
 
     private void init() {
 
-        //String savedPassword = App.getInstance().getPin().readFromFile(passwordFileName);
-        String savedPassword = App.getKeystore().readFromFile(passwordFileName);
+        String savedPassword = App.getKeystore().hasPin();
         if (savedPassword == null || savedPassword.length() != 4) {
             Intent intent = new Intent(getApplicationContext(), NewPinActivity.class);
             startActivity(intent);
@@ -105,54 +102,54 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn0:
                 sb.append(button0.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn1:
                 sb.append(button1.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn2:
                 sb.append(button2.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn3:
                 sb.append(button3.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn4:
                 sb.append(button4.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn5:
                 sb.append(button5.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn6:
                 sb.append(button6.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn7:
                 sb.append(button7.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn8:
                 sb.append(button8.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn9:
                 sb.append(button9.getText().toString());
-                checkPin();
+                enterPin();
                 break;
             case R.id.btn_del:
                 if (sb.length() != 0) {
                     sb.deleteCharAt((sb.length() - 1));
-                    checkPin();
+                    enterPin();
                     break;
                 }
         }
     }
 
-    private void checkPin() {
+    private void enterPin() {
         switch (sb.length()) {
             case 0:
                 tv2.getBackground().clearColorFilter();
@@ -180,11 +177,9 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                 tv8.getBackground().clearColorFilter();
                 break;
             case 4:
-                //String savedPassword = App.getInstance().getPin().readFromFile(passwordFileName);
-                String savedPassword = App.getKeystore().readFromFile(passwordFileName);
                 String newPassword = sb.toString();
 
-                if (newPassword.equals(savedPassword)) {
+                if (App.getKeystore().checkPin(newPassword)) {
 
                     tv2.getBackground().setColorFilter(greenFilter);
                     tv4.getBackground().setColorFilter(greenFilter);

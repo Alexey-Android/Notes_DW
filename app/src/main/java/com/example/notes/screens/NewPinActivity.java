@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notes.App;
 import com.example.notes.R;
 
 import java.io.BufferedWriter;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class NewPinActivity extends AppCompatActivity {
-    public final static String passwordFileName = "password";
+    //public final static String passwordFileName = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,8 @@ public class NewPinActivity extends AppCompatActivity {
                     Toast.makeText(NewPinActivity.this, getString(R.string.pin_four), Toast.LENGTH_SHORT).show();
                 } else {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorGrey));
-                    boolean isPasswordWritten = writeToFile(password, passwordFileName);
+                    // boolean isPasswordWritten = writeToFile(password, passwordFileName);
+                    boolean isPasswordWritten = App.getKeystore().saveNewPin(password);
                     if (isPasswordWritten) {
                         Toast.makeText(NewPinActivity.this, getString(R.string.new_pin_saved), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
@@ -75,23 +77,6 @@ public class NewPinActivity extends AppCompatActivity {
                 flag[0] = !flag[0];
             }
         });
-    }
-
-    private boolean writeToFile(String str, String fileName) {
-        // Создадим файл и откроем поток для записи данных
-        // Обеспечим переход символьных потока данных к байтовым потокам.
-        // Запишем текст в поток вывода данных, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
-        // Осуществим запись данных
-        // Закроем поток
-        try (FileOutputStream fos = openFileOutput(fileName, MODE_PRIVATE);
-             OutputStreamWriter osw = new OutputStreamWriter(fos);
-             BufferedWriter bw = new BufferedWriter(osw)) {
-            bw.write(str);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     @Override

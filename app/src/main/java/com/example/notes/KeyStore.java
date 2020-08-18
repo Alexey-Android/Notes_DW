@@ -2,7 +2,9 @@ package com.example.notes;
 
 public interface KeyStore {
 
-    boolean writeToFile(String str, String fileName);
-    String readFromFile(String fileName);
+    boolean saveNewPin(String pin);
 
+    String hasPin();
+
+    boolean checkPin(String pin);
 }

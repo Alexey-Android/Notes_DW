@@ -17,12 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notes.App;
 import com.example.notes.R;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class EnterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -68,8 +64,8 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
 
     private void init() {
 
-        String savedPassword = readFromFile(passwordFileName);
-
+        //String savedPassword = App.getInstance().getPin().readFromFile(passwordFileName);
+        String savedPassword = App.getKeystore().readFromFile(passwordFileName);
         if (savedPassword == null || savedPassword.length() != 4) {
             Intent intent = new Intent(getApplicationContext(), NewPinActivity.class);
             startActivity(intent);
@@ -184,7 +180,8 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                 tv8.getBackground().clearColorFilter();
                 break;
             case 4:
-                String savedPassword = readFromFile(passwordFileName);
+                //String savedPassword = App.getInstance().getPin().readFromFile(passwordFileName);
+                String savedPassword = App.getKeystore().readFromFile(passwordFileName);
                 String newPassword = sb.toString();
 
                 if (newPassword.equals(savedPassword)) {
@@ -218,25 +215,5 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         mainThreadHandler.removeCallbacks(onPasswordCorrect);
         super.onDestroy();
-    }
-
-    private String readFromFile(String fileName) {
-        // Получим входные байты из файла которых нужно прочесть.
-        // Декодируем байты в символы
-        // Читаем данные из потока ввода, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
-        StringBuilder sb2 = new StringBuilder();
-        try (FileInputStream fis = openFileInput(fileName);
-             InputStreamReader isr = new InputStreamReader(fis);
-             BufferedReader br = new BufferedReader(isr);
-        ) {
-            String s;
-            while ((s = br.readLine()) != null) {
-                sb2.append(s);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return sb2.toString();
     }
 }

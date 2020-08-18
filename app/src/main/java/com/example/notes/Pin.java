@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class Pin {
+public class Pin implements KeyStore{
     private Context context;
     public Pin(Context context) {
         this.context = context;
@@ -32,7 +32,7 @@ public class Pin {
             return false;
         }
     }
-    private String readFromFile(String fileName) {
+    public String readFromFile(String fileName) {
         // Получим входные байты из файла которых нужно прочесть.
         // Декодируем байты в символы
         // Читаем данные из потока ввода, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.

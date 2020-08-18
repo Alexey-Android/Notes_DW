@@ -3,7 +3,6 @@ package com.example.notes.screens;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -16,19 +15,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.notes.Pin;
 import com.example.notes.R;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class NewPinActivity extends AppCompatActivity {
-
     public final static String passwordFileName = "password";
 
     @Override
@@ -37,32 +31,26 @@ public class NewPinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_pin);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
         init();
     }
 
     private void init() {
-
         Button btnSave = findViewById(R.id.save);
         final TextView fourSymbols = findViewById(R.id.tv_four_symbol);
         final ImageButton iBtnEye = findViewById(R.id.ib_eye);
         final boolean[] flag = {true};
         final EditText newPin = findViewById(R.id.et_new_pin);
-
         btnSave.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
                 final String password = newPin.getText().toString();
                 if (password.length() != 4) {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorRed));
                     Toast.makeText(NewPinActivity.this, getString(R.string.pin_four), Toast.LENGTH_SHORT).show();
                 } else {
                     fourSymbols.setTextColor(getResources().getColor(R.color.colorGrey));
-                    boolean isPasswordWritten = Pin.writeToFile(password, passwordFileName);
+                    boolean isPasswordWritten = writeToFile(password, passwordFileName);
                     if (isPasswordWritten) {
-                        //String savedPassword = readFromFile(passwordFileName);
                         Toast.makeText(NewPinActivity.this, getString(R.string.new_pin_saved), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ListNotesActivity.class);
                         startActivity(intent);
@@ -73,7 +61,6 @@ public class NewPinActivity extends AppCompatActivity {
         iBtnEye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // меняем изображение на кнопке
                 if (flag[0]) {
                     iBtnEye.setImageResource(R.drawable.ic_baseline_visibility_24);
@@ -90,7 +77,7 @@ public class NewPinActivity extends AppCompatActivity {
         });
     }
 
-  /*  private boolean writeToFile(String str, String fileName) {
+    private boolean writeToFile(String str, String fileName) {
         // Создадим файл и откроем поток для записи данных
         // Обеспечим переход символьных потока данных к байтовым потокам.
         // Запишем текст в поток вывода данных, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
@@ -105,27 +92,7 @@ public class NewPinActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
-    }*/
-
-  /*  private String readFromFile(String fileName) {
-        // Получим входные байты из файла которых нужно прочесть.
-        // Декодируем байты в символы
-        // Читаем данные из потока ввода, буферизуя символы так, чтобы обеспечить эффективную запись отдельных символов.
-        StringBuilder sb2 = new StringBuilder();
-        try (FileInputStream fis = openFileInput(fileName);
-             InputStreamReader isr = new InputStreamReader(fis);
-             BufferedReader br = new BufferedReader(isr);
-        ) {
-            String s;
-            while ((s = br.readLine()) != null) {
-                sb2.append(s);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return sb2.toString();
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,7 +103,6 @@ public class NewPinActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

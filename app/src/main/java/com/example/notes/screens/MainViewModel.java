@@ -1,6 +1,5 @@
 package com.example.notes.screens;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 

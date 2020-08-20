@@ -30,7 +30,6 @@ public class App extends Application {
            Изменением одной строчки здесь,
            мы заменяем реализацию во всем приложении!
         */
-        //noteRepository = new FileNoteRepository(this);
         keystore = new Pin(this);
     }
 

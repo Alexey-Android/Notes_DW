@@ -18,13 +18,7 @@ import android.widget.Toast;
 import com.example.notes.App;
 import com.example.notes.R;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-
 public class NewPinActivity extends AppCompatActivity {
-    //public final static String passwordFileName = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

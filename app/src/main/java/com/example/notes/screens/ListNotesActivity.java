@@ -68,7 +68,6 @@ public class ListNotesActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), NewPinActivity.class);
             startActivity(intent);
         }
-        //return super.onOptionsItemSelected(item);
         return true;
     }
 }

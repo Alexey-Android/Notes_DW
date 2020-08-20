@@ -7,5 +7,4 @@
         android:icon="@drawable/ic_baseline_lock_24"
         android:title="@string/_pin"
         app:showAsAction="always" />
-
 </menu>
